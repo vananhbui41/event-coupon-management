@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class EventsShops extends Migration
+class CouponMember extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class EventsShops extends Migration
      */
     public function up()
     {
-        Schema::create('events_shops', function (Blueprint $table) {
+        Schema::create('coupon_member', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('shop_id');
-            $table->unsignedInteger('event_id');
+            $table->unsignedInteger('coupon_id');
+            $table->unsignedInteger('members_id');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class EventsShops extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events_shops');
+        Schema::dropIfExists('coupon_member');
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Coupons extends Migration
+class Coupon extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Coupons extends Migration
      */
     public function up()
     {
-        Schema::create('coupons', function (Blueprint $table) {
+        Schema::create('coupon', function (Blueprint $table) {
             $table->id('id');
             $table->integer('coupon_code');
             $table->integer('r_online_code');
@@ -38,6 +38,6 @@ class Coupons extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('coupon');
     }
 }

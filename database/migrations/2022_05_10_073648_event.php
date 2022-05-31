@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class Events extends Migration
+class Event extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class Events extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('event', function (Blueprint $table) {
             $table->id('id');
             $table->integer('event_code');
             $table->string('title');
@@ -57,6 +57,6 @@ class Events extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('event');
     }
 }

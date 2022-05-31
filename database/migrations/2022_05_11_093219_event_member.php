@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CouponsMembers extends Migration
+class EventMember extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CouponsMembers extends Migration
      */
     public function up()
     {
-        Schema::create('coupons_members', function (Blueprint $table) {
+        Schema::create('event_member', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('coupon_id');
+            $table->unsignedInteger('event_id');
             $table->unsignedInteger('members_id');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class CouponsMembers extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('coupons_members');
+        Schema::dropIfExists('event_member');
     }
 }
