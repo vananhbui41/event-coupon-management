@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Coupon;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreCouponRequest;
 
 class CouponController extends Controller
 {
@@ -32,22 +33,12 @@ class CouponController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request) {
+    public function store(StoreCouponRequest $request) {
         // \dd($request->all());
         $image = $request->file('image');
         $imagePath = $image->move('image', $image->getClientOriginalName());
         
-        $storeData = $request->validate([
-            'code'=>'required|max:20',
-            'ronline_coupon_code'=>'max:20',
-            'title'=>'required',
-            'name'=>'required',
-            'summary'=>'required',
-            // 'image'=>'required|image',
-            'public_date'=>'required',
-            'start_time'=>'required',
-            'end_time'=>'required',
-        ]);
+        $storeData = $request->safe()->only('code','title','name','summary','image','public_date','start_time','end_time');
         
         $storeData['image'] = $imagePath;
         $storeData = $request->all();
@@ -116,6 +107,6 @@ class CouponController extends Controller
     public function destroy($id) {
         $coupon = Coupon::findOrFail($id);
         $coupon->delete();
-        return redirect('/coupons')->with('completed','Coupon has been deleted')
+        return redirect('/coupons')->with('completed','Coupon has been deleted');
     }
 }

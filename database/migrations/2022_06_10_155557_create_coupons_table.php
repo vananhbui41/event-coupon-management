@@ -15,7 +15,7 @@ class CreateCouponsTable extends Migration
     {
         Schema::create('coupons', function (Blueprint $table) {
             $table->id('id');
-            $table->string('code',20);
+            $table->string('code',20)->unique();
             $table->string('ronline_coupon_code',20);
             $table->string('title',255);
             $table->text('name');
