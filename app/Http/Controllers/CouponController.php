@@ -34,7 +34,6 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCouponRequest $request) {
-        // \dd($request->all());
         $image = $request->file('image');
         $imagePath = $image->move('image', $image->getClientOriginalName());
         
@@ -75,22 +74,12 @@ class CouponController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {
+    public function update(StoreCouponRequest $request, $id) {
         
         $image = $request->file('image');
         $imagePath = $image->move('image', $image->getClientOriginalName());
         
-        $updateData = $request->validate([
-            'code'=>'required|max:20',
-            'ronline_coupon_code'=>'max:20',
-            'title'=>'required',
-            'name'=>'required',
-            'summary'=>'required',
-            // 'image'=>'required',
-            'public_date'=>'required',
-            'start_time'=>'required',
-            'end_time'=>'required',
-        ]);
+        $updateData = $request->safe()->only('code','title','name','summary','image','public_date','start_time','end_time');
 
         $updateData['image']=$imagePath;
         $updateData = request()->except(['_token','_method']);
