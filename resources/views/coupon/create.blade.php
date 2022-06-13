@@ -27,7 +27,8 @@
           <label for="ronline_coupon_code">R-online coupon code:</label>
           <input type="text" 
           class="form-control " 
-          name="ronline_coupon_code""/>
+          name="ronline_coupon_code"
+          value="{{old('ronline_coupon_code')}}"/>
         </div>
         <div class="form-group">
           <label for="title">Title:</label>
