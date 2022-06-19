@@ -53,50 +53,55 @@
               <label for="unlimit">無制限</label>
             </div>
             <div>
-                <button class="btn btn-primary" type="submit">Search</button>
+                <button class="btn btn-primary">Search</button>
             </div>
-
         </div>
     </form>
+    
+    <div>
+      <a href="{{ route('coupons.create')}}" class="btn btn-primary"> Create coupon </a>
+    </div>
+    <table class="table">
+      <thead>
+          <tr class="table-warning">
+            <td>Coupon Code</td>
+            <td>Title</td>
+            <td>Public Day</td>
+            <td>Start From</td>
+            <td>End at</td>
+            <td>Type</td>
+            <td></td>
+            <td></td>
+          </tr>
+      </thead>
+      <tbody>
+          @foreach($coupons as $coupon)
+          <tr>
+              <td>{{$coupon->code}}</td>
+              <td>{{$coupon->title}}</td>
+              <td>{{$coupon->public_date}}</td>
+              <td>{{$coupon->start_time}}</td>
+              <td>{{$coupon->end_time}}</td>
+              <td>
+              @if($coupon->type == 0)
+                1回のみ
+              @else
+                無制限
+              @endif
+              </td>
+              <td class="text-center">
+                  <a href="{{ route('coupons.show', $coupon->id)}}" class="btn btn-primary btn-sm">Distribute</a>
+              </td>
+              <td class="text-center">
+                  <a href="{{ route('coupons.edit', $coupon->id)}}" class="btn btn-primary btn-sm">Edit</a>
+              </td>
+          </tr>
+          @endforeach
+      </tbody>
+    </table>
   </div>
-  <table class="table">
-    <thead>
-        <tr class="table-warning">
-          <td>Coupon Code</td>
-          <td>Title</td>
-          <td>Public Day</td>
-          <td>Start From</td>
-          <td>End at</td>
-          <td>Type</td>
-          <td></td>
-          <td></td>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach($coupons as $coupon)
-        <tr>
-            <td>{{$coupon->code}}</td>
-            <td>{{$coupon->title}}</td>
-            <td>{{$coupon->public_date}}</td>
-            <td>{{$coupon->start_time}}</td>
-            <td>{{$coupon->end_time}}</td>
-            <td>
-            @if($coupon->type == 0)
-              1回のみ
-            @else
-              無制限
-            @endif
-            </td>
-            <td class="text-center">
-                <a href="{{ route('coupons.show', $coupon->id)}}" class="btn btn-primary btn-sm">Distribute</a>
-            </td>
-            <td class="text-center">
-                <a href="{{ route('coupons.edit', $coupon->id)}}" class="btn btn-primary btn-sm">Edit</a>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-  </table>
+
+  
   {{ $coupons->links() }}
 <div>
 @endsection
