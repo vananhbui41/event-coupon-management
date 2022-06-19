@@ -30,8 +30,10 @@ class CouponController extends Controller
         $memo = $request->memo;
         $public_date_from = $request->public_date_from;
         $public_date_to = $request->public_date_to;
-        $start_time = $request->start_time;
-        $end_time = $request->end_time;
+        $start_time_from = $request->start_time_from;
+        $start_time_to = $request->start_time_to;
+        $end_time_from = $request->end_time_from;
+        $end_time_to = $request->end_time_to;
         $type = $request->type;
 
 
@@ -42,33 +44,31 @@ class CouponController extends Controller
             $coupons->where('memo','LIKE','%'.$memo.'%');
         }
 
+        if ($start_time_from && $start_time_to) {
+            $start = Carbon::parse($start_time_from);
+            $end = Carbon::parse($start_time_to);
+            $coupons->whereBetween('start_time',[$start,$end]);
+        }
+
         if ($public_date_from && $public_date_to) {
             $start = Carbon::parse($public_date_from);
             $end = Carbon::parse($public_date_to);
-            $public_date = Coupon::whereDate('public_date','<=',$end)
-            ->whereDate('public_date','>=',$start)
-            ->get();
+            $coupons->whereBetween('public_date',[$start,$end]);
         }
 
-        if ($start_time) {
-            $coupons->where('start_time','LIKE','%'.$start_time.'%');
+        if ($end_time_from && $end_time_to) {
+            $start = Carbon::parse($end_time_from);
+            $end = Carbon::parse($end_time_to);
+            $coupons->whereBetween('end_time',[$start,$end]);
+        }
+        
+        if ($type) {
+            $coupons->where('type',$type);
         }
 
-        if ($end_time) {
-            $coupons->where('end_time','LIKE','%'.$end_time.'%');
-        }
+        $data = $coupons->latest()->paginate(10);
 
-        $data = [
-            'code' => $code,
-            'memo' => $memo,
-            'public_date' => $public_date_from,
-            'start_time' => $start_time,
-            'end_time' => $end_time,
-            'type' => $type,
-            'coupons' => $coupons->latest()->paginate(10),
-        ];
-
-        return view('coupon/index',$data);
+        return view('coupon/index',['coupons' => $data]);
     }
 
     /**

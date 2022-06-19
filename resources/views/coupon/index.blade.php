@@ -6,11 +6,11 @@
   }
 </style>
 <div class="card push-top">
-  {{-- @if(session()->get('success'))
+  @if(session()->get('success'))
     <div class="alert alert-success">
       {{ session()->get('success') }}  
     </div><br />
-  @endif --}}
+  @endif
   <div class="card-header">
     Coupon List
   </div>
@@ -18,29 +18,33 @@
     <form action="{{ route('coupons.filter') }}" method="GET">
         <div class="form-group">
             <div class="form-group">
-                <label class="col-sm-4">クーポンコード</label>
-                <input type="text" name="code" class="form-control" value="{{ $code ?? '' }}">
+              <label>クーポンコード</label>
+              <input type="text" name="code" class="form-control" value="{{ $code ?? '' }}">
             </div>
             <div class="form-group">
-                <label>メモ</label>
-                <input type="text" name="memo" class="form-control" value="{{ $memo ?? '' }}">
+              <label>メモ</label>
+              <input type="text" name="memo" class="form-control" value="{{ $memo ?? '' }}">
             </div>
             <div class="form-group">
-                <label>公開開始日</label>
-                <input type="date" name="public_date_from" id="public_date_from" value="{{ $public_date_from ?? '' }}">
-                <input type="date" name="public_date_to" id="public_date_to" value="{{ $public_date_to ?? '' }}">
+              <label>公開開始日: </label>
+              <input type="date" name="public_date_from" id="public_date_from" value="{{ $public_date_from ?? '' }}">
+              ~
+              <input type="date" name="public_date_to" id="public_date_to" value="{{ $public_date_to ?? '' }}">
             </div>
             <div class="form-group">
-                <label>利用開始日</label>
-                <input type="date" name="start_time" id="start_time" value="{{ $start_time ?? '' }}">
+              <label>利用開始日: </label>
+              <input type="date" name="start_time_from" id="start_time_from" value="{{ $start_time_from ?? '' }}">
+              ~
+              <input type="date" name="start_time_to" id="start_time_to" value="{{ $start_time_to ?? '' }}">
             </div>
             <div class="form-group">
-              <label>利用終了日</label>
-              <input type="date" name="end_time" id="end_time" value="{{ $end_time ?? '' }}">
-              <input type="date" name="end_time" id="end_time" value="{{ $end_time ?? '' }}">
+              <label>利用終了日: </label>
+              <input type="date" name="end_time_from" id="end_time_from" value="{{ $end_time_from ?? '' }}">
+              ~
+              <input type="date" name="end_time_to" id="end_time_to" value="{{ $end_time_to ?? '' }}">
             </div>
             <div class="form-group">
-              <label>利用回数</label>
+              <label>利用回数: </label>
               <input type="radio" name="type" id="No condition" value="NULL">
               <label for="No condition">条件なし</label>
               <input type="radio" name="type" id="one_time" value="0">
