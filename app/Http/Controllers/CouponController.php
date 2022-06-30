@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Coupon;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreCouponRequest;
+use Carbon\Carbon;
 
 class CouponController extends Controller
 {
@@ -14,8 +15,60 @@ class CouponController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $coupon = Coupon::all();
-        return view('coupon/index',compact('coupon'));
+        // $coupon = Coupon::all();
+        // return view('coupon/index',compact('coupon'));
+
+        $coupons = Coupon::latest()->paginate(10);
+
+        return view('coupon/index',compact('coupons'));
+    }
+
+    public function filter(Request $request) {
+        $coupons = Coupon::query();
+
+        $code = $request->code;
+        $memo = $request->memo;
+        $public_date_from = $request->public_date_from;
+        $public_date_to = $request->public_date_to;
+        $start_time_from = $request->start_time_from;
+        $start_time_to = $request->start_time_to;
+        $end_time_from = $request->end_time_from;
+        $end_time_to = $request->end_time_to;
+        $type = $request->type;
+
+
+        if ($code) {
+            $coupons->where('code','LIKE','%'.$code.'%');
+        }
+        if ($memo) {
+            $coupons->where('memo','LIKE','%'.$memo.'%');
+        }
+
+        if ($start_time_from && $start_time_to) {
+            $start = Carbon::parse($start_time_from);
+            $end = Carbon::parse($start_time_to);
+            $coupons->whereBetween('start_time',[$start,$end]);
+        }
+
+        if ($public_date_from && $public_date_to) {
+            $start = Carbon::parse($public_date_from);
+            $end = Carbon::parse($public_date_to);
+            $coupons->whereBetween('public_date',[$start,$end]);
+        }
+
+        if ($end_time_from && $end_time_to) {
+            $start = Carbon::parse($end_time_from);
+            $end = Carbon::parse($end_time_to);
+            $coupons->whereBetween('end_time',[$start,$end]);
+        }
+        
+        if ($type) {
+            $coupons->where('type',$type);
+        }
+
+        $data = $coupons->latest()->paginate(10);
+
+        return view('coupon/index',['coupons' => $data]);
     }
 
     /**
@@ -37,7 +90,16 @@ class CouponController extends Controller
         $image = $request->file('image');
         $imagePath = $image->move('image', $image->getClientOriginalName());
         
-        $storeData = $request->safe()->only('code','title','name','summary','image','public_date','start_time','end_time');
+        $storeData = $request->safe()->only(
+            'code',
+            'title',
+            'name',
+            'summary',
+            'image',
+            'public_date',
+            'start_time',
+            'end_time',
+        );
         
         $storeData['image'] = $imagePath;
         $storeData = $request->all();

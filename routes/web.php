@@ -19,3 +19,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('coupons', CouponController::class);
+Route::get('coupons-filter',[\App\Http\Controllers\CouponController::class,'filter'])->name('coupons.filter');
