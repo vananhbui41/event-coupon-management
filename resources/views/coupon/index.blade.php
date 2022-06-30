@@ -45,11 +45,11 @@
             </div>
             <div class="form-group">
               <label>利用回数: </label>
-              <input type="radio" name="type" id="No condition" value="NULL">
+              <input type="radio" name="type" id="No condition" value=0>
               <label for="No condition">条件なし</label>
-              <input type="radio" name="type" id="one_time" value="0">
+              <input type="radio" name="type" id="one_time" value=NULL>
               <label for="one_time">１回のみ</label>
-              <input type="radio" name="type" id="unlimit" value="1">
+              <input type="radio" name="type" id="unlimit" value=1>
               <label for="unlimit">無制限</label>
             </div>
             <div>
